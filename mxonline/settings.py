@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'users'
 ]
 
-# 设置 AUTH_USER_MODEL 我自己的
+# 设置 自定义的user 覆盖django默认的user
 AUTH_USER_MODEL = 'users.UserProfile'
 
 MIDDLEWARE_CLASSES = [
