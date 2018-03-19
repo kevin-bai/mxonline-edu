@@ -1,3 +1,4 @@
+# _*_ encoding:utf-8 _*_
 """
 Django settings for mxonline project.
 
@@ -37,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users'
 ]
+
+# 设置 AUTH_USER_MODEL 我自己的
+AUTH_USER_MODEL = 'users.UserProfile'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,8 +82,11 @@ WSGI_APPLICATION = 'mxonline.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mxonline',
+        'USER': 'root',
+        'PASSWORD': 'xiaoshu123',
+        'HOST': '127.0.0.1',
     }
 }
 
