@@ -27,7 +27,7 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
-    course = models.ForeignKey(Course, verbose_name=u"课程")
+    course = models.ForeignKey(Course, verbose_name=u"所在课程")
     name = models.CharField(max_length=50, verbose_name=u'章节名')
     add_time = models.DateField(default=datetime.now, verbose_name=u"章节添加时间")
 
@@ -37,7 +37,7 @@ class Lesson(models.Model):
 
 
 class Video(models  .Model):
-    lesson = models.ForeignKey(Lesson, verbose_name=u'章节名')
+    lesson = models.ForeignKey(Lesson, verbose_name=u'所在章节')
     name = models.CharField(max_length=50, verbose_name=u'视频名')
     add_time = models.DateField(default=datetime.now, verbose_name=u"视频添加时间")
 
@@ -46,8 +46,8 @@ class Video(models  .Model):
         verbose_name_plural = verbose_name
 
 
-class CourseResouce(models.Model):
-    course = models.ForeignKey(Course, verbose_name=u'课程名字')
+class CourseResource(models.Model):
+    course = models.ForeignKey(Course, verbose_name=u'所在课程')
     name = models.CharField(max_length=50, verbose_name=u'课程资源名')
     download = models.FileField(upload_to="courses/resource/%Y%m", verbose_name=u'下载地址')
     add_time = models.DateField(default=datetime.now, verbose_name=u"课程资源添加时间")
