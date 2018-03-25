@@ -11,7 +11,7 @@ class Course(models.Model):
     name = models.CharField(max_length=50, verbose_name=u"课程名称")
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
     detail = models.TextField(verbose_name=u"课程详情")
-    degree = models.CharField(choices=(('LV1', '初级'), ('LV2', '中级'), ('lv3', '高级')))
+    degree = models.CharField(choices=(('LV1', '初级'), ('LV2', '中级'), ('lv3', '高级')), max_length=3)
     learn_times = models.IntegerField(default=0, verbose_name=u"课程时间(分钟)")
     lessen_num = models.IntegerField(default=0, verbose_name=u"章节数")
     course_type = models.CharField(max_length=50, verbose_name=u"课程类别")

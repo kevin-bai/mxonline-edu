@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users'
+    'users',
+    'organization',
+    'courses'
 ]
 
 # 设置 自定义的user 覆盖django默认的user
