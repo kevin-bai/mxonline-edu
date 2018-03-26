@@ -11,9 +11,9 @@ from django.contrib.auth.models import AbstractUser
 class UserProfile(AbstractUser):
     nick_name = models.CharField(max_length=50, verbose_name=u"用户昵称")
     birth_day = models.DateField(verbose_name=u"生日", null=True, blank="" )
-    gender = models.CharField(max_length=5, choices=(("mail", u"男"), ("female", u"女")))
+    gender = models.CharField(max_length=6, choices=(("mail", u"男"), ("female", u"女")), verbose_name=u'性别')
     address = models.CharField(max_length=128, null=True, blank="", verbose_name=u"地址", default="")
-    phone = models.IntegerField(null=True, blank="", verbose_name=u"手机")
+    phone = models.CharField(max_length=11, null=True, blank="", verbose_name=u"手机")
     avatar = models.ImageField(upload_to="image/%Y/%m", default=u"images/default.png", max_length=100, verbose_name=u"头像")
 
     class Meta:

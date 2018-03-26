@@ -91,6 +91,9 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'xiaoshu123',
         'HOST': '127.0.0.1',
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        }
     }
 }
 
@@ -117,15 +120,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  # 这里改成false，以后django取时间就不用世界时间，改用本地时间
 
 
 # Static files (CSS, JavaScript, Images)
