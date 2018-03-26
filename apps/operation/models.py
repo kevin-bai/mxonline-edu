@@ -13,7 +13,7 @@ from users.models import UserProfile
 
 class UserAsk(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'姓名')
-    mobile = models.IntegerField(max_length=11, verbose_name=u'电话')
+    mobile = models.IntegerField(verbose_name=u'电话')
     course_name = models.CharField(max_length=50, verbose_name=u'课程名')
     add_time = models.DateField(default=datetime.now, verbose_name=u'添加时间')
 
