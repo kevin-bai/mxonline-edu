@@ -4,8 +4,14 @@ __author__ = 'kevin'
 __date__ = '2018/3/27 19:41'
 
 import xadmin
+from xadmin import views
 
 from .models import EmailVerifyRecord
+
+
+class BaseSetting(object):
+    enable_themes = True
+    use_bootswatch = True
 
 
 class EmailVerifyRecordAdmin(object):
@@ -18,3 +24,4 @@ class EmailVerifyRecordAdmin(object):
 
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
+xadmin.site.register(views.BaseAdminView, BaseSetting)
