@@ -1,2 +1,6 @@
 .idea
-.migrations
+migrations
+*.bak
+*.pyc
+dist
+build
