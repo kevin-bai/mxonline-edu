@@ -16,6 +16,9 @@ class CityDict(models.Model):
         verbose_name = u'城市'
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return self.name
+
 
 class CourseOrg(models.Model):
     city = models.ForeignKey(CityDict, verbose_name=u'所在城市')
@@ -23,13 +26,16 @@ class CourseOrg(models.Model):
     desc = models.TextField(verbose_name=u'机构描述')
     click_num = models.IntegerField(default=0, verbose_name=u'点击数')
     favorite_num = models.IntegerField(default=0, verbose_name=u'收藏数')
-    image = models.ImageField(upload_to='courseOrg/%Y%m', verbose_name=u'课程图片')
+    image = models.ImageField(upload_to='courseOrg/%Y%m', verbose_name=u'课程图片', default=u"images/default.png")
     address = models.CharField(max_length=150, verbose_name=u'机构地址')
     add_time = models.DateField(default=datetime.now, verbose_name=u'机构加入时间')
 
     class Meta:
         verbose_name = u'课程机构'
         verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return self.name
 
 
 class Teacher(models.Model):
@@ -46,4 +52,7 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = u'教师'
         verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return self.name
 
