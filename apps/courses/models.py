@@ -11,13 +11,15 @@ class Course(models.Model):
     name = models.CharField(max_length=50, verbose_name=u"课程名称")
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
     detail = models.TextField(verbose_name=u"课程详情")
-    degree = models.CharField(choices=(('LV1', '初级'), ('LV2', '中级'), ('lv3', '高级')), max_length=3)
+    degree = models.CharField(choices=(('LV1', '初级'), ('LV2', '中级'), ('lv3', '高级')),
+                              max_length=3, verbose_name=u'难度')
     learn_times = models.IntegerField(default=0, verbose_name=u"课程时间(分钟)")
     lessen_num = models.IntegerField(default=0, verbose_name=u"章节数")
     course_type = models.CharField(max_length=50, verbose_name=u"课程类别")
     student_num = models.IntegerField(default=0, verbose_name=u'学习人数')
     favourite_mun = models.IntegerField(default=0,verbose_name=u'收藏人数')
-    image = models.ImageField(upload_to="courses/%Y/%m", verbose_name=u"封面图", max_length=150)
+    image = models.ImageField(upload_to="courses/%Y/%m", verbose_name=u"封面图", max_length=150,
+                              default='/images/course/default.png')
     click_num = models.IntegerField(default=0, verbose_name=u"课程点击数")
     add_time = models.DateField(default=datetime.now, verbose_name=u"课程添加时间")
 
