@@ -15,6 +15,12 @@ class BaseSetting(object):
     use_bootswatch = True
 
 
+class CommonSetting(object):
+    site_title = u'慕学在线后台管理'
+    site_footer = u'慕学在线'
+    menu_style = 'accordion'  # 让menu可以收缩
+
+
 class EmailVerifyRecordAdmin(object):
     # 列显示
     list_display = ['code', 'email', 'send_type', 'send_time']
@@ -33,3 +39,4 @@ class BannerAdmin(object):
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 xadmin.site.register(views.BaseAdminView, BaseSetting)
+xadmin.site.register(views.CommAdminView, CommonSetting)
