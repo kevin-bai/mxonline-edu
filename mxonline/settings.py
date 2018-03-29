@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'courses',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 # 设置 自定义的user 覆盖django默认的user
