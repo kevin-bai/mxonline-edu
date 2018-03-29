@@ -1,3 +1,5 @@
+# delete all *.pyc from project-path
+
 import os
 path = 'D:\python-project\mxonline'  # project-paht
 for prefix, dirs, files in os.walk(path):
