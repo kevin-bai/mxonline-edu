@@ -19,12 +19,10 @@ import xadmin
 
 from django.views.generic import TemplateView
 
-from users.views import login,register
+from users.views import LoginView
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
-
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
-    url(r'^login/$', login, name='login'),
-    url(r'^register/$', register, name='register'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
 ]
