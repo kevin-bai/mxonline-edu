@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile
 from .form import LoginForm, RegisterForm
+from utils.email_send import send_register_mail
 
 
 # Create your views here.
@@ -34,7 +35,7 @@ class LoginView(View):
     def post(self, request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            user_name = request.POST.get('username', "")
+            user_name = request.POST.get('email', "")
             pass_word = request.POST.get('password', "")
             # 向数据库发起验证，用户名和密码是否正确
             user = authenticate(username=user_name, password=pass_word)
@@ -60,10 +61,18 @@ class RegisterView(View):
             email = request.POST.get('email', '')
             pass_word = request.POST.get('password', '')
             user_profile = UserProfile()
+            user_profile.is_active = False
             user_profile.username = email
             user_profile.email = email
             user_profile.password = make_password(pass_word)
             user_profile.save()
-            return render(request, 'index.html', {'register_form': register_form})
+
+            send_register_mail(email, 'register')
+            return render(request, 'login.html')
         else:
             return render(request, 'register.html', {'register_form': register_form})
+
+
+class ActiveUserView(View):
+    def get(self, request, active_code):
+        pass
