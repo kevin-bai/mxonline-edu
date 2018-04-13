@@ -1,10 +1,12 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.hashers import make_password
+from django.core.urlresolvers import reverse
 
 from .models import UserProfile, EmailVerifyRecord
 from .form import LoginForm, RegisterForm, ForgetForm, ResetForm
@@ -136,3 +138,12 @@ class ModifyPwdView(View):
             return render(request, 'chang_success.html')
         else:
             return render(request, 'password_reset.html', {'msg': u'错误'})
+
+
+class LogoutView(View):
+    """
+    用户登出
+    """
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse("index"))

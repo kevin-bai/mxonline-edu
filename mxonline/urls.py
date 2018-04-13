@@ -19,13 +19,15 @@ import xadmin
 
 from django.views.generic import TemplateView
 
-from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetPasswordView ,ModifyPwdView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, \
+    ResetPasswordView ,ModifyPwdView, LogoutView
 
 urlpatterns = [
     url(r'^captcha/', include('captcha.urls')),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^logout/$',LogoutView.as_view(), name='logout'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^forgetpwd/$', ForgetPwdView.as_view(), name='forgetpwd'),
     url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view()),
