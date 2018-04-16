@@ -28,7 +28,7 @@
                                 <a href="?ct="><span class="active2">全部</span></a>
 
                                 {% for city in all_citys %}
-                                 <a href="?city=1&ct={{ city.id }}"><span class="">{{ city.name }}</span></a>
+                                 <a href="?city={{ city.id }}&ct="><span class="">{{ city.name }}</span></a>
                                 {% endfor %}
                             </div>
                         </li>
@@ -45,12 +45,12 @@
                             </ul>
                         </div>
 
-                        {% for org in all_orgs %}
+                        {% for org in all_orgs.object_list %}
                         <dl class="des difdes">
                             <dt>
                                 <a href="org-detail-homepage.html">
                                     <img width="200" height="120" class="scrollLoading"
-                                         data-url="{{ MEDIA_URL }}{{ org.image }}"/>
+                                         src="{{ MEDIA_URL }}{{ org.image }}"/>
                                 </a>
                             </dt>
                             <dd>
@@ -83,167 +83,14 @@
                         </dl>
                         {% endfor %}
 
-
-
-                        <dl class="des difdes">
-                            <dt>
-                                <a href="org-detail-homepage.html">
-                                    <img width="200" height="120" class="scrollLoading"
-                                         data-url="/static/media/org/2016/11/bjdx.jpg"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <div class="clearfix">
-                                    <a href="org-detail-homepage.html">
-                                        <h1>北京大学</h1>
-                                        <div class="pic fl">
-
-                                            <img src="/static/images/authentication.png"/>
-
-                                            <img src="/static/images/gold.png"/>
-
-                                        </div>
-                                    </a>
-                                </div>
-                                <ul class="cont">
-                                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                                        <p class="c7">学习人数：<span>1000</span></p></li>
-                                    <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
-                                    <li class="pic10" style="padding-left:18px;">经典课程：
-
-                                        <a href="/diary/19/">c语言基础入门</a>
-
-                                        <a href="/diary/16/">数据库基础</a>
-
-                                    </li>
-                                </ul>
-                            </dd>
-                            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
-                        </dl>
-
-                        <dl class="des difdes">
-                            <dt>
-                                <a href="org-detail-homepage.html">
-                                    <img width="200" height="120" class="scrollLoading"
-                                         data-url="/static/media/org/2016/11/qhdx-logo.png"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <div class="clearfix">
-                                    <a href="org-detail-homepage.html">
-                                        <h1>清华大学</h1>
-                                        <div class="pic fl">
-
-                                            <img src="/static/images/authentication.png"/>
-
-                                            <img src="/static/images/gold.png"/>
-
-                                        </div>
-                                    </a>
-                                </div>
-                                <ul class="cont">
-                                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                                        <p class="c7">学习人数：<span>1000</span></p></li>
-                                    <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
-                                    <li class="pic10" style="padding-left:18px;">经典课程：
-
-                                        <a href="/diary/19/">c语言基础入门</a>
-
-                                        <a href="/diary/16/">数据库基础</a>
-
-                                    </li>
-                                </ul>
-                            </dd>
-                            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
-                        </dl>
-
-                        <dl class="des difdes">
-                            <dt>
-                                <a href="org-detail-homepage.html">
-                                    <img width="200" height="120" class="scrollLoading"
-                                         data-url="/static/media/org/2016/11/njdx.jpg"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <div class="clearfix">
-                                    <a href="org-detail-homepage.html">
-                                        <h1>南京大学</h1>
-                                        <div class="pic fl">
-
-                                            <img src="/static/images/authentication.png"/>
-
-                                            <img src="/static/images/gold.png"/>
-
-                                        </div>
-                                    </a>
-                                </div>
-                                <ul class="cont">
-                                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                                        <p class="c7">学习人数：<span>1000</span></p></li>
-                                    <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
-                                    <li class="pic10" style="padding-left:18px;">经典课程：
-
-                                        <a href="/diary/19/">c语言基础入门</a>
-
-                                        <a href="/diary/16/">数据库基础</a>
-
-                                    </li>
-                                </ul>
-                            </dd>
-                            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
-                        </dl>
-
-                        <dl class="des difdes">
-                            <dt>
-                                <a href="org-detail-homepage.html">
-                                    <img width="200" height="120" class="scrollLoading"
-                                         data-url="/static/media/org/2016/11/imooc_klgAUn5.png"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <div class="clearfix">
-                                    <a href="org-detail-homepage.html">
-                                        <h1>慕课网2</h1>
-                                        <div class="pic fl">
-
-                                            <img src="/static/images/authentication.png"/>
-
-                                            <img src="/static/images/gold.png"/>
-
-                                        </div>
-                                    </a>
-                                </div>
-                                <ul class="cont">
-                                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                                        <p class="c7">学习人数：<span>1000</span></p></li>
-                                    <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
-                                    <li class="pic10" style="padding-left:18px;">经典课程：
-
-                                        <a href="/diary/19/">c语言基础入门</a>
-
-                                        <a href="/diary/16/">数据库基础</a>
-
-                                    </li>
-                                </ul>
-                            </dd>
-                            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
-                        </dl>
-
                     </div>
-                    <div class="pageturn">
+                    <div class="">
                         <ul class="pagelist">
 
 
-                            <li class="active"><a href="?page=1">1</a></li>
-
-
-                            <li><a href="?page=2" class="page">2</a></li>
-
-
-                            <li><a href="?page=3" class="page">3</a></li>
-
-
-                            <li class="long"><a href="?page=2">下一页</a></li>
+                            <div id="pagination">
+                                {{ all_orgs.render }}
+                            </div>
 
 
                         </ul>
@@ -304,3 +151,35 @@
         </div>
     </section>
 {% endblock %}
+
+<script src="/static/js/selectUi.js" type='text/javascript'></script>
+<script src="/static/js/deco-common.js" type='text/javascript'></script>
+<script type="text/javascript" src="/static/js/plugins/laydate/laydate.js"></script>
+<script src="/static/js/plugins/layer/layer.js"></script>
+<script src="/static/js/plugins/queryCity/js/public.js" type="text/javascript"></script>
+<script src="/static/js/unslider.js" type="text/javascript"></script>
+<script src="/static/js/plugins/jquery.scrollLoading.js" type="text/javascript"></script>
+<script src="/static/js/deco-common.js" type="text/javascript"></script>
+
+<script>
+    $(function () {
+        $('#jsStayBtn').on('click', function () {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/org/add_ask/",
+                data: $('#jsStayForm').serialize(),
+                async: true,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('#jsStayForm')[0].reset();
+                        alert("提交成功")
+                    } else if (data.status == 'fail') {
+                        $('#jsCompanyTips').html(data.msg)
+                    }
+                },
+            });
+        });
+    })
+
+</script>

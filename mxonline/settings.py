@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
+    'pure_pagination'
 ]
 
 # 设置 自定义的user 覆盖django默认的user
@@ -84,6 +85,13 @@ TEMPLATES = [
         },
     },
 ]
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 5,
+    'MARGIN_PAGES_DISPLAYED': 2,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
 
 WSGI_APPLICATION = 'mxonline.wsgi.application'
 
