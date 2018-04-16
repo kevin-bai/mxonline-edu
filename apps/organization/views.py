@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import CityDict, CourseOrg
+from .form import UserAskForm
 
 
 class OrglistView(View):
@@ -29,7 +30,7 @@ class OrglistView(View):
             all_orgs = all_orgs.filter(category=ct_id)
 
         # 排序
-        sort = request.GET.get('sort','')
+        sort = request.GET.get('sort', '')
         if sort:
             if sort == 'students':
                 all_orgs = all_orgs.order_by('-students_num')
@@ -58,5 +59,20 @@ class OrglistView(View):
             'org_num': org_nums,
             'city_id': city_id,
             'ct_id': ct_id,
-            'hot_orgs':hot_orgs
+            'hot_orgs': hot_orgs
         })
+
+    def post(self, request):
+        user_ask_form = UserAskForm(request.POST)
+        if user_ask_form.is_valid():
+            name = request.POST.get('name', '')
+            mobile = request.POST.get('mobile', '')
+            course_name = request.POST.get('course_name', '')
+
+            user_ask = UserAskForm()
+            user_ask.name = name
+            user_ask.mobile = mobile
+            user_ask.course_name = course_name
+            user_ask.save()
+
+            return render(request, 'send_sucess.html', {'msg': u'提交成功'})

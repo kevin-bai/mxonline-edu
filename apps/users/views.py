@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.hashers import make_password
 from django.core.urlresolvers import reverse
 
@@ -75,7 +75,7 @@ class RegisterView(View):
             user_profile.save()
 
             send_register_mail(email, 'register')
-            return render(request, 'send_sucess.html')
+            return render(request, 'send_sucess.html', {'msg': u'邮件已经发送，请查收'})
         else:
             return render(request, 'register.html', {'register_form': register_form})
 
@@ -144,6 +144,7 @@ class LogoutView(View):
     """
     用户登出
     """
+
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse("index"))
