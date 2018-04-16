@@ -11,13 +11,17 @@
                         <li>
                             <h2>机构类别</h2>
                             <div class="cont">
-                                <a href="?city="><span class="{% ifequal ct_id "" %}active2{% endifequal %}">全部</span></a>
+                                <a href="?city="><span
+                                        class="{% ifequal ct_id "" %}active2{% endifequal %}">全部</span></a>
 
-                                <a href="?city={{ city.id }}&ct=org"><span class="{% ifequal ct_id 'org' %}active2{% endifequal %}">培训机构</span></a>
+                                <a href="?city={{ city.id }}&ct=org"><span
+                                        class="{% ifequal ct_id 'org' %}active2{% endifequal %}">培训机构</span></a>
 
-                                <a href="?city={{ city.id }}&ct=college"><span class="{% ifequal ct_id 'college' %}active2{% endifequal %}">高校</span></a>
+                                <a href="?city={{ city.id }}&ct=college"><span
+                                        class="{% ifequal ct_id 'college' %}active2{% endifequal %}">高校</span></a>
 
-                                <a href="?city={{ city.id }}&ct=person"><span class="{% ifequal ct_id 'person' %}active2{% endifequal %}">个人</span></a>
+                                <a href="?city={{ city.id }}&ct=person"><span
+                                        class="{% ifequal ct_id 'person' %}active2{% endifequal %}">个人</span></a>
 
                             </div>
                         </li>
@@ -25,10 +29,12 @@
                             <h2>所在地区</h2>
                             <div class="more">更多</div>
                             <div class="cont">
-                                <a href="?ct="><span class="{% ifequal city_id ""|stringformat:"i" %}active2{% endifequal %}">全部</span></a>
+                                <a href="?ct="><span
+                                        class="{% ifequal city_id ""|stringformat:"i" %}active2{% endifequal %}">全部</span></a>
 
                                 {% for city in all_citys %}
-                                 <a href="?city={{ city.id }}&ct={{ ct_id }}"><span class="{% ifequal city_id city.id|stringformat:"i" %}active2{% endifequal %}">{{ city.name }}</span></a>
+                                    <a href="?city={{ city.id }}&ct={{ ct_id }}"><span
+                                            class="{% ifequal city_id city.id|stringformat:"i" %}active2{% endifequal %}">{{ city.name }}</span></a>
                                 {% endfor %}
                             </div>
                         </li>
@@ -46,41 +52,41 @@
                         </div>
 
                         {% for org in all_orgs.object_list %}
-                        <dl class="des difdes">
-                            <dt>
-                                <a href="org-detail-homepage.html">
-                                    <img width="200" height="120" class="scrollLoading"
-                                         src="{{ MEDIA_URL }}{{ org.image }}"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <div class="clearfix">
+                            <dl class="des difdes">
+                                <dt>
                                     <a href="org-detail-homepage.html">
-                                        <h1>{{ org.name }}</h1>
-                                        <div class="pic fl">
-
-                                            <img src="/static/images/authentication.png"/>
-
-                                            <img src="/static/images/gold.png"/>
-
-                                        </div>
+                                        <img width="200" height="120" class="scrollLoading"
+                                             src="{{ MEDIA_URL }}{{ org.image }}"/>
                                     </a>
-                                </div>
-                                <ul class="cont">
-                                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                                        <p class="c7">学习人数：<span>1000</span></p></li>
-                                    <li class="c8" style="padding-left:18px;">{{ org.address }}</li>
-                                    <li class="pic10" style="padding-left:18px;">经典课程：
+                                </dt>
+                                <dd>
+                                    <div class="clearfix">
+                                        <a href="org-detail-homepage.html">
+                                            <h1>{{ org.name }}</h1>
+                                            <div class="pic fl">
 
-                                        <a href="/diary/19/">c语言基础入门</a>
+                                                <img src="/static/images/authentication.png"/>
 
-                                        <a href="/diary/16/">数据库基础</a>
+                                                <img src="/static/images/gold.png"/>
 
-                                    </li>
-                                </ul>
-                            </dd>
-                            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
-                        </dl>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <ul class="cont">
+                                        <li class="first"><p class="pic9">课程数：<span>{{ org.course_num }}</span></p>
+                                            <p class="c7">学习人数：<span>{{ org.students_num }}</span></p></li>
+                                        <li class="c8" style="padding-left:18px;">{{ org.address }}</li>
+                                        <li class="pic10" style="padding-left:18px;">经典课程：
+
+                                            <a href="/diary/19/">c语言基础入门</a>
+
+                                            <a href="/diary/16/">数据库基础</a>
+
+                                        </li>
+                                    </ul>
+                                </dd>
+                                <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+                            </dl>
                         {% endfor %}
 
                     </div>
@@ -121,31 +127,15 @@
             <div class="right companyrank layout">
                 <div class="head">授课机构排名</div>
 
-
-                <dl class="des">
-                    <dt class="num fl">1</dt>
-                    <dd>
-                        <a href="/company/2/"><h1>慕课网</h1></a>
-                        <p>北京市</p>
-                    </dd>
-                </dl>
-
-                <dl class="des">
-                    <dt class="num fl">2</dt>
-                    <dd>
-                        <a href="/company/2/"><h1>慕课网2</h1></a>
-                        <p>深圳市</p>
-                    </dd>
-                </dl>
-
-                <dl class="des">
-                    <dt class="num fl">3</dt>
-                    <dd>
-                        <a href="/company/2/"><h1>北京大学</h1></a>
-                        <p>北京市</p>
-                    </dd>
-                </dl>
-
+                {% for hot_org in hot_orgs %}
+                    <dl class="des">
+                        <dt class="num fl">{{ forloop.counter }}</dt>
+                        <dd>
+                            <a href="/company/2/"><h1>{{ hot_org.name }}</h1></a>
+                            <p>{{ hot_org.address }}</p>
+                        </dd>
+                    </dl>
+                {% endfor %}
 
             </div>
         </div>

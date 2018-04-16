@@ -29,6 +29,8 @@ class CourseOrg(models.Model):
                                 verbose_name=u'课程类别', default='org')
     click_num = models.IntegerField(default=0, verbose_name=u'点击数')
     favorite_num = models.IntegerField(default=0, verbose_name=u'收藏数')
+    students_num = models.IntegerField(default=0, verbose_name=u'学习人数')
+    course_num = models.IntegerField(default=0, verbose_name=u'课程数量')
     image = models.ImageField(upload_to='courseOrg/%Y%m', verbose_name=u'课程图片', default=u"images/default.png")
     address = models.CharField(max_length=150, verbose_name=u'机构地址')
     add_time = models.DateField(default=datetime.now, verbose_name=u'机构加入时间')

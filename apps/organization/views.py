@@ -14,10 +14,10 @@ class OrglistView(View):
     def get(self, request):
         # 课程机构
         all_orgs = CourseOrg.objects.all()
-
+        # 点击数降序 取前三个
+        hot_orgs = all_orgs.order_by("-click_num")[:3]
         # 城市
         all_citys = CityDict.objects.all()
-
         # 根据城市筛选
         city_id = request.GET.get('city', '')
         if city_id:
@@ -26,8 +26,15 @@ class OrglistView(View):
         # 类别筛选
         ct_id = request.GET.get('ct', '')
         if ct_id:
-            all_orgs = CourseOrg.objects.filter(category=ct_id)
+            all_orgs = all_orgs.filter(category=ct_id)
 
+        # 排序
+        sort = request.GET.get('sort','')
+        if sort:
+            if sort == 'students':
+                all_orgs = all_orgs.order_by('-students_num')
+            elif sort == 'courses':
+                all_orgs = all_orgs.order_by('-course_num')
         # 课程结构分页
         try:
             page = request.GET.get('page', 1)
@@ -50,5 +57,6 @@ class OrglistView(View):
             'all_citys': all_citys,
             'org_num': org_nums,
             'city_id': city_id,
-            'ct_id': ct_id
+            'ct_id': ct_id,
+            'hot_orgs':hot_orgs
         })
