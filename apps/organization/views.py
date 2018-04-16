@@ -14,12 +14,19 @@ class OrglistView(View):
     def get(self, request):
         # 课程机构
         all_orgs = CourseOrg.objects.all()
-        org_nums = all_orgs.count()
+
         # 城市
         all_citys = CityDict.objects.all()
 
-        city_id = request.GET('city')
+        # 根据城市筛选
+        city_id = request.GET.get('city', '')
+        if city_id:
+            all_orgs = CourseOrg.objects.filter(city_id=int(city_id))
 
+        # 类别筛选
+        ct_id = request.GET.get('ct', '')
+        if ct_id:
+            all_orgs = CourseOrg.objects.filter(category=ct_id)
 
         # 课程结构分页
         try:
@@ -37,8 +44,11 @@ class OrglistView(View):
         #     'people': people,
         # }
 
+        org_nums = all_orgs.count()
         return render(request, 'org-list.html', {
             'all_orgs': orgs_list,
             'all_citys': all_citys,
-            'org_num': org_nums
+            'org_num': org_nums,
+            'city_id': city_id,
+            'ct_id': ct_id
         })
