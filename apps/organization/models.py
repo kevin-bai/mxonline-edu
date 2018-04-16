@@ -4,6 +4,7 @@ from datetime import datetime
 
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -24,6 +25,8 @@ class CourseOrg(models.Model):
     city = models.ForeignKey(CityDict, verbose_name=u'所在城市')
     name = models.CharField(max_length=50, verbose_name=u'机构名称')
     desc = models.TextField(verbose_name=u'机构描述')
+    category = models.CharField(max_length=20, choices=(('org', u'培训机构'), ('person', u'个人'), ('college', u"高校")),
+                                verbose_name=u'课程类别', default='org')
     click_num = models.IntegerField(default=0, verbose_name=u'点击数')
     favorite_num = models.IntegerField(default=0, verbose_name=u'收藏数')
     image = models.ImageField(upload_to='courseOrg/%Y%m', verbose_name=u'课程图片', default=u"images/default.png")
@@ -55,4 +58,3 @@ class Teacher(models.Model):
 
     def __unicode__(self):
         return self.name
-
