@@ -90,7 +90,15 @@ class AddAskView(View):
 
 class OrgHomeView(View):
     def get(self, request, org_id):
-        return render(request, 'org-detail-homepage.html', {'org_id': org_id})
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        # 通过course的外键course_org，反向查找所有的course。有外键的地方都可以这样做
+        all_course = course_org.course_set.all()[:3]
+        all_teacher = course_org.teacher_set.all()[:3]
+        return render(request, 'org-detail-homepage.html', {
+            'org_id': org_id,
+            'all_course': all_course,
+            'all_teacher': all_teacher
+        })
 
 
 class OrgTeacherView(View):

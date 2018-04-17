@@ -10,57 +10,24 @@
             <a class="green fr more" href="org-detail-course.html">查看更多 > </a>
         </div>
         <div class="brief group_list">
-
+            {% for course in all_course %}
             <div class="module1_5 box">
                 <a href="course-detail.html"><img width="214"
-                                                  src="/static/media/courses/2016/11/mysql.jpg"/></a>
+                                                  src="{{ MEDIA_URL }}{{ course.image }}"/></a>
                 <div class="des">
-                    <a href="course-detail.html"><h2>django入门</h2></a>
-                    <span class="fl">课时：<i class="key">0</i></span>
-                    <span class="fr">参加人数：3</span>
+                    <a href="course-detail.html"><h2>{{ course.name }}</h2></a>
+                    <span class="fl">课时：<i class="key">{{ course.learn_times }}</i></span>
+                    <span class="fr">参加人数：{{ course.student_num }}</span>
                 </div>
                 <div class="bottom">
-                    <span class="fl">慕课网</span>
+                    <span class="fl">{{ course.course_org.name }}</span>
                     <span class="star fr  notlogin
                             " data-favid="13" data-fav-type="4">
                             0
                         </span>
                 </div>
             </div>
-
-            <div class="module1_5 box">
-                <a href="course-detail.html"><img width="214"
-                                                  src="/static/media/courses/2016/11/540e57300001d6d906000338-240-135_mvvGYHL.jpg"/></a>
-                <div class="des">
-                    <a href="course-detail.html"><h2>django实战项目</h2></a>
-                    <span class="fl">课时：<i class="key">0</i></span>
-                    <span class="fr">参加人数：0</span>
-                </div>
-                <div class="bottom">
-                    <span class="fl">慕课网</span>
-                    <span class="star fr  notlogin
-                            " data-favid="13" data-fav-type="4">
-                            0
-                        </span>
-                </div>
-            </div>
-
-            <div class="module1_5 box">
-                <a href="course-detail.html"><img width="214"
-                                                  src="/static/media/courses/2016/12/python错误和异常.jpg"/></a>
-                <div class="des">
-                    <a href="course-detail.html"><h2>python错误和异常</h2></a>
-                    <span class="fl">课时：<i class="key">0</i></span>
-                    <span class="fr">参加人数：0</span>
-                </div>
-                <div class="bottom">
-                    <span class="fl">慕课网</span>
-                    <span class="star fr  notlogin
-                            " data-favid="13" data-fav-type="4">
-                            0
-                        </span>
-                </div>
-            </div>
+            {% endfor %}
 
 
         </div>
@@ -70,12 +37,12 @@
             <h1>机构教师</h1>
             <a class="green fr more" href="org-detail-teachers.html">查看更多 > </a>
         </div>
-
-        <div class="diarys">
+        {% for teacher in all_teacher %}
+            <div class="diarys">
             <div class="module5 share company-diary-box" style="padding:10px 0;">
                 <div class="left">
-                    <img class="pic" src="/static/media/teacher/2016/11/aobama_CXWwMef.png"/>
-                    <p>昵称：bobby</p>
+                    <img class="pic" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
+                    <p>昵称：{{ teacher.name }}</p>
                 </div>
                 <div class="right">
                     <div class="top">
@@ -88,8 +55,7 @@
                 </div>
             </div>
         </div>
-
-
+        {% endfor %}
     </div>
     <div class="right companycenter layout">
         <div class="head">
