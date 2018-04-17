@@ -156,5 +156,9 @@ class AddFavorView(View):
             result = {'status': 'success'}
             return JsonResponse(json.dumps(result))
         else:
-            result = {'status': 'fail','msg':user_favor_form.errors}
+            msg = ''
+            for key in user_favor_form.errors:
+                msg += ' Invalid {0} ! '.format(key)
+
+            result = {'status': 'fail', 'msg': msg}
             return JsonResponse(result)
