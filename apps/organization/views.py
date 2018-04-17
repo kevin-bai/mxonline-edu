@@ -90,19 +90,19 @@ class AddAskView(View):
 
 class OrgHomeView(View):
     def get(self, request, org_id):
-        return render(request, 'org-detail-homepage.html')
+        return render(request, 'org-detail-homepage.html', {'org_id': org_id})
 
 
 class OrgTeacherView(View):
     def get(self, request, org_id):
-        return render(request, 'org-detail-teachers.html')
+        return render(request, 'org-detail-teachers.html', {'org_id': org_id})
 
 
 class OrgDescView(View):
     def get(self, request, org_id):
-        return render(request, 'org-detail-desc.html')
+        return render(request, 'org-detail-desc.html', {'org_id': org_id})
 
 
 class OrgCourseView(View):
     def get(self, request, org_id):
-        return render(request, 'org-detail-course.html')
+        return render(request, 'org-detail-course.html', {'org_id': org_id})
