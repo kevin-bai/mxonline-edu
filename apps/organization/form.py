@@ -5,7 +5,7 @@ __author__ = 'kevin'
 __date__ = '2018/4/16 16:57'
 from django import forms
 
-from operation.models import UserAsk
+from operation.models import UserAsk, UserFavorite
 
 
 class UserAskForm(forms.ModelForm):
@@ -27,3 +27,9 @@ class UserAskForm(forms.ModelForm):
             return mobile
         else:
             raise forms.ValidationError(u"手机号码异常", code='mobile_invalid')
+
+
+class UserFavoriteForm(forms.ModelForm):
+    class Meta:
+        model = UserFavorite
+        fields = ['user', 'fav_id', 'fav_type']

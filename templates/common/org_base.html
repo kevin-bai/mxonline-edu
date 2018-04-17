@@ -47,7 +47,7 @@
                         </p>
                     </div>
                     <div class="btn fr collectionbtn  notlogin
-                 " data-favid="22" data-fav-type="1">
+                 " data-favid="{{ course_org.id }}" data-fav-type="2">
                         收藏
                     </div>
 
@@ -224,14 +224,15 @@
         $.ajax({
             cache: false,
             type: "POST",
-            url: "/org/add_fav/",
+            url: "{% url 'org:add_favor' %}",
             data: {'fav_id': fav_id, 'fav_type': fav_type},
             async: true,
             beforeSend: function (xhr, settings) {
-                xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
             },
             success: function (data) {
                 if (data.status == 'fail') {
+                    console.log(data.msg)
                     if (data.msg == '用户未登录') {
                         window.location.href = "login.html";
                     } else {
@@ -246,7 +247,7 @@
     }
 
     $('.collectionbtn').on('click', function () {
-        add_fav($(this), 1, 2);
+        add_fav($(this), $(this).data('favid'), $(this).data('fav_type'));
     });
 
     $(function () {

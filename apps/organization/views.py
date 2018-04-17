@@ -6,7 +6,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 import json
 
 from .models import CityDict, CourseOrg
-from .form import UserAskForm
+from .form import UserAskForm, UserFavoriteForm
 
 
 class OrglistView(View):
@@ -92,6 +92,7 @@ class OrgHomeView(View):
     """
     机构主页
     """
+
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
         # 通过course的外键course_org，反向查找所有的course。有外键的地方都可以这样做
@@ -109,6 +110,7 @@ class OrgTeacherView(View):
     """
     机构讲师页
     """
+
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
         all_teacher = course_org.teacher_set.all()[:3]
@@ -123,6 +125,7 @@ class OrgDescView(View):
     """
     机构课程页
     """
+
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
         return render(request, 'org-detail-desc.html', {
@@ -135,6 +138,7 @@ class OrgCourseView(View):
     """
     机构课程页
     """
+
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
         all_course = course_org.course_set.all()[:3]
@@ -143,3 +147,14 @@ class OrgCourseView(View):
             'course_org': course_org,
             'all_course': all_course,
         })
+
+
+class AddFavorView(View):
+    def post(self, request):
+        user_favor_form = UserFavoriteForm(request.POST)
+        if user_favor_form.is_valid():
+            result = {'status': 'success'}
+            return JsonResponse(json.dumps(result))
+        else:
+            result = {'status': 'fail','msg':user_favor_form.errors}
+            return JsonResponse(result)
