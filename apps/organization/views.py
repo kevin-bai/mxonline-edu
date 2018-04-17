@@ -86,3 +86,23 @@ class AddAskView(View):
         else:
             result = {'status': 'fail', 'msg': user_ask_form.errors}
             return JsonResponse(result)
+
+
+class OrgHomeView(View):
+    def get(self, request, org_id):
+        return render(request, 'org-detail-homepage.html')
+
+
+class OrgTeacherView(View):
+    def get(self, request, org_id):
+        return render(request, 'org-detail-teachers.html')
+
+
+class OrgDescView(View):
+    def get(self, request, org_id):
+        return render(request, 'org-detail-desc.html')
+
+
+class OrgCourseView(View):
+    def get(self, request, org_id):
+        return render(request, 'org-detail-course.html')
