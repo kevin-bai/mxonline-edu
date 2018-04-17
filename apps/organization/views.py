@@ -89,6 +89,9 @@ class AddAskView(View):
 
 
 class OrgHomeView(View):
+    """
+    机构主页
+    """
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
         # 通过course的外键course_org，反向查找所有的course。有外键的地方都可以这样做
@@ -96,21 +99,47 @@ class OrgHomeView(View):
         all_teacher = course_org.teacher_set.all()[:3]
         return render(request, 'org-detail-homepage.html', {
             'org_id': org_id,
+            'course_org': course_org,
             'all_course': all_course,
             'all_teacher': all_teacher
         })
 
 
 class OrgTeacherView(View):
+    """
+    机构讲师页
+    """
     def get(self, request, org_id):
-        return render(request, 'org-detail-teachers.html', {'org_id': org_id})
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        all_teacher = course_org.teacher_set.all()[:3]
+        return render(request, 'org-detail-teachers.html', {
+            'org_id': org_id,
+            'course_org': course_org,
+            'all_teacher': all_teacher
+        })
 
 
 class OrgDescView(View):
+    """
+    机构课程页
+    """
     def get(self, request, org_id):
-        return render(request, 'org-detail-desc.html', {'org_id': org_id})
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        return render(request, 'org-detail-desc.html', {
+            'org_id': org_id,
+            'course_org': course_org,
+        })
 
 
 class OrgCourseView(View):
+    """
+    机构课程页
+    """
     def get(self, request, org_id):
-        return render(request, 'org-detail-course.html', {'org_id': org_id})
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        all_course = course_org.course_set.all()[:3]
+        return render(request, 'org-detail-course.html', {
+            'org_id': org_id,
+            'course_org': course_org,
+            'all_course': all_course,
+        })
