@@ -150,11 +150,16 @@
                 data: $('#jsStayForm').serialize(),
                 async: true,
                 success: function (data) {
+                    console.log(data.msg)
                     if (data.status == 'success') {
-                        $('#jsStayForm')[0].reset();
+                        $('#jsStayForm').reset();
                         alert("提交成功")
                     } else if (data.status == 'fail') {
-                        $('#jsCompanyTips').html(data.msg)
+                        var error_msg='';
+                        for (var key in data.msg){
+                          error_msg += data.msg[key];
+                        }
+                        $('#jsCompanyTips').html(error_msg)
                         alert('失败')
                     }
                 },

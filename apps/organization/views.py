@@ -1,7 +1,7 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 import json
 
@@ -85,5 +85,4 @@ class AddAskView(View):
             return HttpResponse(json.dumps(result), content_type='application/json')
         else:
             result = {'status': 'fail', 'msg': user_ask_form.errors}
-            return HttpResponse(json.dumps(result),
-                                content_type='application/json')
+            return JsonResponse(result)
