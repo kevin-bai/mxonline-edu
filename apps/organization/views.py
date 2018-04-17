@@ -1,7 +1,9 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
 from django.views.generic.base import View
+from django.http import HttpResponse, HttpResponseRedirect
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+import json
 
 from .models import CityDict, CourseOrg
 from .form import UserAskForm
@@ -62,17 +64,26 @@ class OrglistView(View):
             'hot_orgs': hot_orgs
         })
 
+
+class AddAskView(View):
+    # 用户添加咨询
     def post(self, request):
         user_ask_form = UserAskForm(request.POST)
         if user_ask_form.is_valid():
-            name = request.POST.get('name', '')
-            mobile = request.POST.get('mobile', '')
-            course_name = request.POST.get('course_name', '')
+            # name = request.POST.get('name', '')
+            # mobile = request.POST.get('mobile', '')
+            # course_name = request.POST.get('course_name', '')
+            #
+            # user_ask = UserAskForm()
+            # user_ask.name = name
+            # user_ask.mobile = mobile
+            # user_ask.course_name = course_name
+            # user_ask.save()
 
-            user_ask = UserAskForm()
-            user_ask.name = name
-            user_ask.mobile = mobile
-            user_ask.course_name = course_name
-            user_ask.save()
-
-            return render(request, 'send_sucess.html', {'msg': u'提交成功'})
+            user_ask = user_ask_form.save(commit=True)
+            result = {'status': 'success'}
+            return HttpResponse(json.dumps(result), content_type='application/json')
+        else:
+            result = {'status': 'fail', 'msg': user_ask_form.errors}
+            return HttpResponse(json.dumps(result),
+                                content_type='application/json')
