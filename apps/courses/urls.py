@@ -10,10 +10,10 @@ from .views import CourseListView,CourseDetailView,CourseCommentView,CourseVideo
 urlpatterns = [
     # 课程列表项
     url(r'^list/$', CourseListView.as_view(), name='course_list'),
-    # 课程列表项
-    url(r'^detail/$', CourseDetailView.as_view(), name='course_detail'),
-    # 课程列表项
-    url(r'^comment/$', CourseCommentView.as_view(), name='course_comment'),
-    # 课程列表项
-    url(r'^video/$', CourseVideoView.as_view(), name='course_video'),
+    # 课程详情项
+    url(r'^detail/(?P<course_id>\d+)$', CourseDetailView.as_view(), name='course_detail'),
+    # 课程评论项
+    url(r'^comment/(?P<course_id>\d+)$', CourseCommentView.as_view(), name='course_comment'),
+    # 课程视频项
+    url(r'^video/(?P<course_id>\d+)$', CourseVideoView.as_view(), name='course_video'),
 ]
