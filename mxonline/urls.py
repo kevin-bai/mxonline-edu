@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name='modify_pwd'),
     # 课程机构url配置
     url(r'^org/', include('organization.urls', namespace='org')),
+    # 课程url配置
+    url(r'^course/', include('courses.urls', namespace='course')),
     # 处理media图片的路径
     url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT})
 ]
