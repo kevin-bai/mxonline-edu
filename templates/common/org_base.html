@@ -33,7 +33,7 @@
 
             <div class="middle companyheader">
                 <div class="wp">
-                    <img class="fl" style="width: 112px;height: 103px" src="{{ MEDIA_URL }}{{ course_org.image }}"/>
+                    <img class="fl" style="width: 212px;height: 103px" src="{{ MEDIA_URL }}{{ course_org.image }}"/>
                     <div class="head fl">
                         <h1>
                             {{ course_org.name }}
@@ -221,6 +221,8 @@
     //收藏分享
     //收藏分享
     function add_fav(current_elem, fav_id, fav_type) {
+        console.log(fav_id )
+        console.log(fav_type )
         $.ajax({
             cache: false,
             type: "POST",
@@ -231,6 +233,8 @@
                 xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
             },
             success: function (data) {
+                console.log(data)
+
                 if (data.status == 'fail') {
                     console.log(data.msg)
                     if (data.msg == '用户未登录') {
@@ -240,14 +244,20 @@
                     }
 
                 } else if (data.status == 'success') {
-                    current_elem.text(data.msg)
+                    if(data.fav_status == true){
+                        current_elem.text('已收藏')
+                    }
+                    else {
+                        current_elem.text('收藏')
+                    }
+
                 }
             },
         });
     }
 
     $('.collectionbtn').on('click', function () {
-        add_fav($(this), $(this).data('favid'), $(this).data('fav_type'));
+        add_fav($(this), $(this).data('favid'), $(this).data('fav-type'));
     });
 
     $(function () {

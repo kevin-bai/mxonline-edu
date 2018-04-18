@@ -6,7 +6,8 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 import json
 
 from .models import CityDict, CourseOrg
-from .form import UserAskForm, UserFavoriteForm
+from .form import UserAskForm
+from operation.models import UserFavorite
 
 
 class OrglistView(View):
@@ -150,15 +151,31 @@ class OrgCourseView(View):
 
 
 class AddFavorView(View):
+    """
+    用户收藏，用户取消收藏
+    """
     def post(self, request):
-        user_favor_form = UserFavoriteForm(request.POST)
-        if user_favor_form.is_valid():
-            result = {'status': 'success'}
-            return JsonResponse(json.dumps(result))
-        else:
-            msg = ''
-            for key in user_favor_form.errors:
-                msg += ' Invalid {0} ! '.format(key)
+        fav_id = request.POST.get('fav_id', 0)
+        fav_type = request.POST.get('fav_type', 0)
 
-            result = {'status': 'fail', 'msg': msg}
-            return JsonResponse(result)
+        # django 内置的user类，和我们定义的不一样
+        # 判断用户登录状态
+        if not request.user.is_authenticated():
+            return JsonResponse({'status': 'failed', 'msg': u'用户未登录'})
+
+        # 直接通过request找到user
+        exist_record = UserFavorite.objects.filter(user=request.user, fav_id=int(fav_id), fav_type=int(fav_type))
+
+        if exist_record:
+            exist_record.delete()
+            return JsonResponse({'status': 'success', 'fav_status': False})
+        else:
+            record = UserFavorite()
+            if int(fav_id) > 0 and int(fav_type) > 0:
+                record.user = request.user
+                record.fav_id = int(fav_id)
+                record.fav_type = int(fav_type)
+                record.save()
+                return JsonResponse({'status': 'success', 'fav_status': True})
+            else:
+                return JsonResponse({'status': 'success', 'fav_status': False})

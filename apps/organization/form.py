@@ -29,7 +29,3 @@ class UserAskForm(forms.ModelForm):
             raise forms.ValidationError(u"手机号码异常", code='mobile_invalid')
 
 
-class UserFavoriteForm(forms.ModelForm):
-    class Meta:
-        model = UserFavorite
-        fields = ['user', 'fav_id', 'fav_type']
