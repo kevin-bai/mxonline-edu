@@ -96,6 +96,11 @@ class OrgHomeView(View):
 
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
+        has_fav = False
+        if request.user.is_authenticated:
+            fav_record = UserFavorite.objects.filter(user=request.user, fav_id=int(org_id), fav_type=2)
+            if fav_record:
+                has_fav = True
         # 通过course的外键course_org，反向查找所有的course。有外键的地方都可以这样做
         all_course = course_org.course_set.all()[:3]
         all_teacher = course_org.teacher_set.all()[:3]
@@ -103,7 +108,8 @@ class OrgHomeView(View):
             'org_id': org_id,
             'course_org': course_org,
             'all_course': all_course,
-            'all_teacher': all_teacher
+            'all_teacher': all_teacher,
+            'has_fav': has_fav
         })
 
 
@@ -114,24 +120,36 @@ class OrgTeacherView(View):
 
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
+        has_fav = False
+        if request.user.is_authenticated:
+            fav_record = UserFavorite.objects.filter(user=request.user, fav_id=int(org_id), fav_type=2)
+            if fav_record:
+                has_fav = True
         all_teacher = course_org.teacher_set.all()[:3]
         return render(request, 'org-detail-teachers.html', {
             'org_id': org_id,
             'course_org': course_org,
-            'all_teacher': all_teacher
+            'all_teacher': all_teacher,
+            'has_fav': has_fav
         })
 
 
 class OrgDescView(View):
     """
-    机构课程页
+    机构介绍页
     """
 
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
+        has_fav = False
+        if request.user.is_authenticated:
+            fav_record = UserFavorite.objects.filter(user=request.user, fav_id=int(org_id), fav_type=2)
+            if fav_record:
+                has_fav = True
         return render(request, 'org-detail-desc.html', {
             'org_id': org_id,
             'course_org': course_org,
+            'has_fav': has_fav
         })
 
 
@@ -142,11 +160,17 @@ class OrgCourseView(View):
 
     def get(self, request, org_id):
         course_org = CourseOrg.objects.get(id=int(org_id))
+        has_fav = False
+        if request.user.is_authenticated:
+            fav_record = UserFavorite.objects.filter(user=request.user, fav_id=int(org_id), fav_type=2)
+            if fav_record:
+                has_fav = True
         all_course = course_org.course_set.all()[:3]
         return render(request, 'org-detail-course.html', {
             'org_id': org_id,
             'course_org': course_org,
             'all_course': all_course,
+            'has_fav': has_fav
         })
 
 
@@ -154,6 +178,7 @@ class AddFavorView(View):
     """
     用户收藏，用户取消收藏
     """
+
     def post(self, request):
         fav_id = request.POST.get('fav_id', 0)
         fav_type = request.POST.get('fav_type', 0)
