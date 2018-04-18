@@ -49,6 +49,9 @@ class UserFavorite(models.Model):
         verbose_name = u'用户收藏'
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return '新用户收藏：'+self.user.nick_name
+
 
 class UserMessage(models.Model):
     # 这里user不用外键，是因为有2种消息，一种是定向发给某个用户，另一种是发给所有用户的。
@@ -74,3 +77,6 @@ class UserCourse(models.Model):
     class Meta:
         verbose_name = u'用户学习的课程'
         verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return '{0} -> {1}'.format(self.user.username, self.course.name)

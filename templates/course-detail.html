@@ -19,16 +19,17 @@
                             <span class="key">{{ course.desc }}</span>
                             <div class="prize">
                                 <span class="fl">难度：<i class="key">{{ course.degree }}</i></span>
-                                <span class="fr">学习人数：{{ course.student_num }}</span>
+                                <span class="fr">学习人数：{{ course.usercourse_set.all.count }}</span>
                             </div>
                             <ul class="parameter">
                                 <li><span class="pram word3">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长：</span><span>{{ course.learn_times }}</span></li>
-                                <li><span class="pram word3">章&nbsp;节&nbsp;数：</span><span>{{ course.lessen_num }}</span></li>
+                                <li><span class="pram word3">章&nbsp;节&nbsp;数：</span><span>{{ course.lesson_set.all.count }}</span></li>
                                 <li><span class="pram word3">课程类别：</span><span title="">{{ course.course_type }}</span></li>
                                 <li class="piclist"><span class="pram word4">学习用户：</span>
-
+                                    {% for user_course in course.get_learn_user %}
                                     <span class="pic"><img width="40" height="40"
-                                                           src="/static/media/image/2016/12/default_big_14.png"/></span>
+                                                           src="{{ MEDIA_URL }}{{ user_course.user.avatar }}"/></span>
+                                    {% endfor %}
 
                                 </li>
                             </ul>

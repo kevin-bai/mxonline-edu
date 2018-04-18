@@ -31,6 +31,9 @@ class Course(models.Model):
         verbose_name = u"课程"
         verbose_name_plural = verbose_name
 
+    def get_learn_user(self):
+        return self.usercourse_set.all()[:5]
+
     def __unicode__(self):
         return self.name
 
