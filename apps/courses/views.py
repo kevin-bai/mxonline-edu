@@ -29,10 +29,19 @@ class CourseListView(View):
 class CourseDetailView(View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
+
         course.click_num += 1
         course.save()
+
+        # 相关推荐
+        tag = course.tag
+        if tag:
+            relate_courses = Course.objects.filter(tag=tag)[:1]
+        else:
+            relate_courses = Course.objects.all().order_by('-click_num')[:1]
         return render(request, 'course-detail.html', {
-            'course': course
+            'course': course,
+            'relate_courses': relate_courses
         })
 
 

@@ -22,13 +22,19 @@
                                 <span class="fr">学习人数：{{ course.usercourse_set.all.count }}</span>
                             </div>
                             <ul class="parameter">
-                                <li><span class="pram word3">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长：</span><span>{{ course.learn_times }}</span></li>
-                                <li><span class="pram word3">章&nbsp;节&nbsp;数：</span><span>{{ course.lesson_set.all.count }}</span></li>
-                                <li><span class="pram word3">课程类别：</span><span title="">{{ course.course_type }}</span></li>
+                                <li><span
+                                        class="pram word3">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长：</span><span>{{ course.learn_times }}</span>
+                                </li>
+                                <li><span
+                                        class="pram word3">章&nbsp;节&nbsp;数：</span><span>{{ course.lesson_set.all.count }}</span>
+                                </li>
+                                <li><span class="pram word3">课程类别：</span><span title="">{{ course.course_type }}</span>
+                                </li>
                                 <li class="piclist"><span class="pram word4">学习用户：</span>
                                     {% for user_course in course.get_learn_user %}
-                                    <span class="pic"><img width="40" height="40"
-                                                           src="{{ MEDIA_URL }}{{ user_course.user.avatar }}"/></span>
+                                        <span class="pic"><img width="40" height="40"
+                                                               src="
+                                                                       {{ MEDIA_URL }}{{ user_course.user.avatar }}"/></span>
                                     {% endfor %}
 
                                 </li>
@@ -76,10 +82,10 @@
                         <div class="clear">
                             <ul>
                                 <li>
-                                    <span>课 &nbsp;程&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{ course.course_org.course_set.all.count }}</span>
+                                    <span>课 &nbsp;程&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ course.course_org.course_set.all.count }}</span>
                                 </li>
                                 <li>
-                                    <span>教 &nbsp;师&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{ course.course_org.teacher_set.all.count }}</span>
+                                    <span>教 &nbsp;师&nbsp; 数：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ course.course_org.teacher_set.all.count }}</span>
                                 </li>
                                 <li>所在地区：&nbsp;&nbsp;{{ course.course_org.city }}</li>
                                 <li>认&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;证&nbsp;:
@@ -117,21 +123,20 @@
                 <div class="right layout">
                     <div class="head">相关课程推荐</div>
                     <div class="group_recommend">
-
-                        <dl>
-                            <dt>
-                                <a target="_blank" href="">
-                                    <img width="240" height="220" class="scrollLoading"
-                                         src="/static/media/courses/2016/11/540e57300001d6d906000338-240-135_mvvGYHL.jpg"/>
-                                </a>
-                            </dt>
-                            <dd>
-                                <a target="_blank" href=""><h2> django实战项目</h2></a>
-                                <span class="fl">学习时长：<i class="key">0</i></span>
-                            </dd>
-                        </dl>
-
-
+                        {% for course in relate_courses %}
+                            <dl>
+                                <dt>
+                                    <a target="_blank" href="">
+                                        <img width="240" height="220" class="scrollLoading"
+                                             src="{{ MEDIA_URL }}{{ course.image }}"/>
+                                    </a>
+                                </dt>
+                                <dd>
+                                    <a target="_blank" href=""><h2> {{ course.name }}</h2></a>
+                                    <span class="fl">学习时长：<i class="key">0</i></span>
+                                </dd>
+                            </dl>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -152,7 +157,7 @@
                 success: function (data) {
                     if (data.status == 'fail') {
                         if (data.msg == '用户未登录') {
-                            window.location.href = "login.html";
+                            window.location.href = "{% url  'login' %}";
                         } else {
                             alert(data.msg)
                         }
