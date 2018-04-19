@@ -20,7 +20,7 @@ class Course(models.Model):
     learn_times = models.IntegerField(default=0, verbose_name=u"课程时间(分钟)")
     lessen_num = models.IntegerField(default=0, verbose_name=u"章节数")
     course_type = models.CharField(max_length=50, verbose_name=u"课程类别")
-    student_num = models.IntegerField(default=0, verbose_name=u'学习人数')
+    # student_num = models.IntegerField(default=0, verbose_name=u'学习人数')
     favourite_mun = models.IntegerField(default=0, verbose_name=u'收藏人数')
     tag = models.CharField(default='', verbose_name=u'课程标签', max_length=10)
     image = models.ImageField(upload_to="courses/%Y/%m", verbose_name=u"封面图", max_length=150,

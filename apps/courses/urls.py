@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^detail/(?P<course_id>\d+)$', CourseDetailView.as_view(), name='course_detail'),
     # 课程评论项
     url(r'^comment/(?P<course_id>\d+)$', CourseCommentView.as_view(), name='course_comment'),
-    # 课程视频项
+    # 课程章节项
     url(r'^video/(?P<course_id>\d+)$', CourseVideoView.as_view(), name='course_video'),
 ]

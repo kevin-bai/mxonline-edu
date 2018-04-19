@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 
 from .models import Course
-from operation.models import UserFavorite
+from operation.models import UserFavorite,UserCourse
 
 
 # Create your views here.
@@ -66,5 +66,14 @@ class CourseCommentView(View):
 
 
 class CourseVideoView(View):
+    """
+    课程章节
+    """
     def get(self, request, course_id):
+        course = Course.objects.get(id=int(course_id))
+        user_course = UserCourse()
+        user_course.user = request.user
+        user_course.course = course
+        user_course.save()
+
         return render(request, 'course-video.html')

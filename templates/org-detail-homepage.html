@@ -17,7 +17,7 @@
                 <div class="des">
                     <a href="course-detail.html"><h2>{{ course.name }}</h2></a>
                     <span class="fl">课时：<i class="key">{{ course.learn_times }}</i></span>
-                    <span class="fr">参加人数：{{ course.student_num }}</span>
+                    <span class="fr">参加人数：{{ course.usercourse_set.all.count }}</span>
                 </div>
                 <div class="bottom">
                     <span class="fl">{{ course.course_org.name }}</span>

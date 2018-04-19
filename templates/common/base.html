@@ -14,10 +14,6 @@
     {% endblock %}
         <script src="/static/js/jquery.min.js" type="text/javascript"></script>
         <script src="/static/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-    {% block custom_js %}
-
-    {% endblock %}
-
 </head>
 <body>
 {% block header %}
@@ -465,9 +461,9 @@
     <script src="/static/js/unslider.js" type="text/javascript"></script>
     <script src="/static/js/plugins/jquery.scrollLoading.js" type="text/javascript"></script>
     <script src="/static/js/deco-common.js" type="text/javascript"></script>
-{% block exend_js %}
     <script type="text/javascript" src="/static/js/index.js"></script>
-{% endblock %}
 
+    {% block custom_js %}
+    {% endblock %}
 </body>
 </html>
