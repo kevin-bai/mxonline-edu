@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 
 from .models import Course
+from operation.models import UserFavorite
 
 
 # Create your views here.
@@ -30,18 +31,32 @@ class CourseDetailView(View):
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
 
+        # 点击
         course.click_num += 1
         course.save()
+
+        # 收藏
+        fav_record_course = False
+        fav_record_org = False
+        if request.user.is_authenticated:
+            fav_record_course = UserFavorite.objects.filter(user=request.user, fav_id=int(course_id), fav_type=1)
+            if fav_record_course:
+                fav_record_course = True
+            fav_record_org = UserFavorite.objects.filter(user=request.user, fav_id=int(course.course_org.id), fav_type=2)
+            if fav_record_org:
+                fav_record_org = True
 
         # 相关推荐
         tag = course.tag
         if tag:
             relate_courses = Course.objects.filter(tag=tag)[:1]
         else:
-            relate_courses = Course.objects.all().order_by('-click_num')[:1]
+            relate_courses = []
         return render(request, 'course-detail.html', {
             'course': course,
-            'relate_courses': relate_courses
+            'relate_courses': relate_courses,
+            'has_fav_course': fav_record_course,
+            'has_fav_org': fav_record_org
         })
 
 
