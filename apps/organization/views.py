@@ -150,6 +150,10 @@ class TeacherListView(View):
 
 
 class TeacherDetailView(View):
+    """
+    讲师详情
+    """
+
     def get(self, request, teacher_id):
         teacher = Teacher.objects.get(id=teacher_id)
         if not teacher:
@@ -157,10 +161,24 @@ class TeacherDetailView(View):
         hot_teachers = Teacher.objects.all().order_by('-click_num')[:3]
         all_courses = teacher.course_set.all()
 
+        # 收藏
+        fav_record_teacher = False
+        fav_record_org = False
+        if request.user.is_authenticated:
+            fav_record_teacher = UserFavorite.objects.filter(user=request.user, fav_id=int(teacher_id), fav_type=3)
+            if fav_record_teacher:
+                fav_record_teacher = True
+            fav_record_org = UserFavorite.objects.filter(user=request.user, fav_id=int(teacher.org.id),
+                                                         fav_type=2)
+            if fav_record_org:
+                fav_record_org = True
+
         return render(request, 'teacher-detail.html', {
             'teacher': teacher,
             'all_courses': all_courses,
-            'hot_teachers': hot_teachers
+            'hot_teachers': hot_teachers,
+            'has_fav_teacher': fav_record_teacher,
+            'has_fav_org': fav_record_org
         })
 
 
