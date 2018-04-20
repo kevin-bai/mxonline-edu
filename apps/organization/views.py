@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 import json
 
-from .models import CityDict, CourseOrg
+from .models import CityDict, CourseOrg, Teacher
 from .form import UserAskForm
 from operation.models import UserFavorite
 
@@ -131,6 +131,33 @@ class OrgTeacherView(View):
             'course_org': course_org,
             'all_teacher': all_teacher,
             'has_fav': has_fav
+        })
+
+
+class TeacherListView(View):
+    def get(self, request):
+        sort = request.GET.get('sort', '')
+        if sort == 'hot':
+            teachers = Teacher.objects.all().order_by('-click_num')
+        else:
+            teachers = Teacher.objects.all().order_by('-add_time')
+
+        return render(request, 'teachers-list.html', {
+            'teachers': teachers
+        })
+
+
+class TeacherDetailView(View):
+    def get(self, request, teacher_id):
+        teacher = Teacher.objects.get(id=teacher_id)
+        if not teacher:
+            return render(request, '404.html')
+
+        all_courses = teacher.course_set.all()
+
+        return render(request, 'teacher-detail.html', {
+            'teacher': teacher,
+            'all_courses': all_courses
         })
 
 
