@@ -137,13 +137,15 @@ class OrgTeacherView(View):
 class TeacherListView(View):
     def get(self, request):
         sort = request.GET.get('sort', '')
+        hot_teachers = Teacher.objects.all().order_by('-click_num')
         if sort == 'hot':
-            teachers = Teacher.objects.all().order_by('-click_num')
+            teachers = hot_teachers
         else:
             teachers = Teacher.objects.all().order_by('-add_time')
 
         return render(request, 'teachers-list.html', {
-            'teachers': teachers
+            'teachers': teachers,
+            'hot_teachers': hot_teachers
         })
 
 
@@ -152,12 +154,13 @@ class TeacherDetailView(View):
         teacher = Teacher.objects.get(id=teacher_id)
         if not teacher:
             return render(request, '404.html')
-
+        hot_teachers = Teacher.objects.all().order_by('-click_num')[:3]
         all_courses = teacher.course_set.all()
 
         return render(request, 'teacher-detail.html', {
             'teacher': teacher,
-            'all_courses': all_courses
+            'all_courses': all_courses,
+            'hot_teachers': hot_teachers
         })
 
 
