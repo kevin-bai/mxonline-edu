@@ -26,11 +26,14 @@ class CourseComments(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户')
     course = models.ForeignKey(Course, verbose_name=u'课程')
     comment = models.CharField(max_length=200, verbose_name=u'用户评论')
-    add_time = models.DateField(default=datetime.now, verbose_name=u'添加时间')
+    add_time = models.DateTimeField(auto_now=True, verbose_name=u'评论添加时间')
 
     class Meta:
         verbose_name = u'课程评论'
         verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return '{0} -> {1} 的评论'.format(self.user.username, self.course.name)
 
 
 class UserFavorite(models.Model):

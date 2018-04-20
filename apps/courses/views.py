@@ -1,9 +1,11 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
 from django.views.generic.base import View
+from django.http import JsonResponse
+import json
 
 from .models import Course
-from operation.models import UserFavorite, UserCourse
+from operation.models import UserFavorite, UserCourse, CourseComments
 
 
 # Create your views here.
@@ -63,7 +65,16 @@ class CourseDetailView(View):
 
 class CourseCommentView(View):
     def get(self, request, course_id):
-        return render(request, 'course-comment.html')
+        course = Course.objects.get(id=int(course_id))
+        if not course:
+            return render(request, '404.html')
+
+        all_comment = CourseComments.objects.filter(course=course).order_by('-add_time')
+        return render(request, 'course-comment.html', {
+            'course': course,
+            'page_name': 'course_comment',
+            'all_comment': all_comment
+        })
 
 
 class CourseVideoView(View):
@@ -73,6 +84,8 @@ class CourseVideoView(View):
 
     def get(self, request, course_id):
         course = Course.objects.get(id=int(course_id))
+        if not course:
+            return render(request, '404.html')
 
         user_course = UserCourse.objects.filter(user=request.user, course=course)
         if not user_course:
@@ -87,5 +100,28 @@ class CourseVideoView(View):
         return render(request, 'course-video.html', {
             'course': course,
             'all_lesson': all_lesson,
-            'all_resource': all_resource
+            'all_resource': all_resource,
+            'page_name': 'course_video'
         })
+
+
+class AddComment(View):
+    """
+    用户添加课程评论
+    """
+
+    def post(self, request):
+        course_id = request.POST.get('course_id', 0)
+        comment = request.POST.get('comments', '')
+        user = request.user
+        if not user.is_authenticated():
+            return JsonResponse({'status': 'failed', 'msg': '用户未登录'})
+
+        course_comment = CourseComments()
+        course_comment.user = user
+        course_comment.course = Course.objects.get(id=course_id)
+        course_comment.comment = comment
+        course_comment.save()
+
+        result = {'status': 'success', 'msg': u'成功'}
+        return JsonResponse(result)
