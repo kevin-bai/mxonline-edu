@@ -133,7 +133,7 @@
                                 <ul class="other-list">
                                     {% for related_course in related_courses %}
                                         <li class="curr">
-                                        <a href="course-detail.html" target="_blank">
+                                        <a href="{% url 'course:course_detail' related_course.id %}" target="_blank">
                                             <img src="{{ MEDIA_URL }}{{ related_course.image }}" alt="">
                                             <span class="name autowrap">{{ related_course.name }}</span>
                                         </a>

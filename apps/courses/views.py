@@ -69,7 +69,7 @@ class CourseCommentView(View):
         if not course:
             return render(request, '404.html')
 
-        related_courses = get_realted_courses(course)
+        related_courses = get_realted_courses(course, show_num=4)
 
         all_comment = CourseComments.objects.filter(course=course).order_by('-add_time')
         return render(request, 'course-comment.html', {
