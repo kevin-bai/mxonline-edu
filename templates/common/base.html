@@ -41,7 +41,7 @@
                                         </dd>
                                     </dl>
                                     <div class="btn">
-                                        <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
+                                        <a class="personcenter fl" href="{% url 'user:user_info' %}">进入个人中心</a>
                                         <a class="fr" href="{% url 'logout' %}">退出</a>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
 
                 <div class="middle">
                     <div class="wp">
-                        <a href="index.html"><img class="fl" src="/static/images/logo.jpg"/></a>
+                        <a href="/"><img class="fl" src="/static/images/logo.jpg"/></a>
                         <div class="searchbox fr">
                             <div class="selectContainer fl">
                             <span class="selectOption" id="jsSelectOption" data-value="course">
@@ -105,7 +105,7 @@
     <section>
         <div class="wp">
             <ul class="crumbs">
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="/">首页</a>></li>
                 <li>课程机构</li>
             </ul>
         </div>

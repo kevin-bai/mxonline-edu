@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from .models import UserProfile, EmailVerifyRecord
 from .form import LoginForm, RegisterForm, ForgetForm, ResetForm
 from utils.email_send import send_register_mail
+from utils.mixin_utils import LoginRequiredMixin
 
 
 # Create your views here.
@@ -31,7 +32,6 @@ class CustomBackend(ModelBackend):
 
 class IndexView(View):
     def get(self, request):
-
         return render(request, 'index.html', {
 
         })
@@ -104,6 +104,10 @@ class ActiveUserView(View):
 
 
 class ForgetPwdView(View):
+    """
+    忘记密码
+    """
+
     def get(self, request):
         forget_form = ForgetForm()
         return render(request, 'forgetpwd.html', {'forget_form': forget_form})
@@ -156,3 +160,47 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse("index"))
+
+
+class UserInfoView(LoginRequiredMixin, View):
+    """
+    用户中心页面
+    """
+
+    def get(self, request):
+        return render(request, 'usercenter-info.html')
+
+    def post(self, request):
+        pass
+
+
+class UserCourseView(LoginRequiredMixin, View):
+    """
+    用户课程页面
+    """
+
+    def get(self, request):
+        return render(request, 'usercenter-mycourse.html')
+
+
+class UserMessageView(LoginRequiredMixin, View):
+    """
+    用户消息页面
+    """
+
+    def get(self, request):
+        return render(request, 'usercenter-message.html')
+
+
+class UserFavoriteView(LoginRequiredMixin, View):
+    """
+    用户收藏页面
+    """
+
+    def get(self, request):
+        return render(request, 'usercenter-fav-org.html')
+
+
+class UserImageUpload(LoginRequiredMixin, View):
+    def post(self, request):
+        pass

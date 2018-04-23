@@ -22,7 +22,7 @@ from django.views.static import serve
 from django.views.generic import TemplateView
 
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, \
-    ResetPasswordView, ModifyPwdView, LogoutView,IndexView
+    ResetPasswordView, ModifyPwdView, LogoutView, IndexView
 from organization.views import OrglistView
 from mxonline.settings import MEDIA_ROOT
 
@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'^org/', include('organization.urls', namespace='org')),
     # 课程url配置
     url(r'^course/', include('courses.urls', namespace='course')),
+    # 课程url配置
+    url(r'^user/', include('users.urls', namespace='user')),
     # 处理media图片的路径
     url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT})
 ]
