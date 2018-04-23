@@ -5,7 +5,7 @@ __author__ = 'kevin'
 __date__ = '2018/4/16 16:57'
 from django import forms
 
-from operation.models import UserAsk, UserFavorite
+from operation.models import UserAsk
 
 
 class UserAskForm(forms.ModelForm):

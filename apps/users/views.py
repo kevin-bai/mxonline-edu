@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.urlresolvers import reverse
 
 from .models import UserProfile, EmailVerifyRecord
-from .form import LoginForm, RegisterForm, ForgetForm, ResetForm
+from .form import LoginForm, RegisterForm, ForgetForm, ResetForm,UploadImageForm
 from utils.email_send import send_register_mail
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -202,5 +202,11 @@ class UserFavoriteView(LoginRequiredMixin, View):
 
 
 class UserImageUpload(LoginRequiredMixin, View):
+    """
+    修改用户头像
+    """
     def post(self, request):
-        pass
+        # 文件类型和别的form字段不一样，不放在POST里面，放在request.FILES
+        image_form = UploadImageForm(request.POST, request.FILES)
+        if image_form.is_valid():
+            pass
