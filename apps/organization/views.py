@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 import json
 
 from .models import CityDict, CourseOrg, Teacher
@@ -18,6 +19,13 @@ class OrglistView(View):
     def get(self, request):
         # 课程机构
         all_orgs = CourseOrg.objects.all()
+
+        # 搜索功能
+        search_word = request.GET.get('search', '')
+        if search_word:
+            all_orgs = CourseOrg.objects.filter(
+                Q(name__icontains=search_word) | Q(desc__icontains=search_word))
+
         # 点击数降序 取前三个
         hot_orgs = all_orgs.order_by("-click_num")[:3]
         # 城市
@@ -136,12 +144,22 @@ class OrgTeacherView(View):
 
 class TeacherListView(View):
     def get(self, request):
+        all_teacher = Teacher.objects.all()
+
+        # 搜索功能
+        search_word = request.GET.get('search', '')
+        if search_word:
+            all_teacher = Teacher.objects.filter(
+                Q(name__icontains=search_word) | Q(work_company__icontains=search_word) | Q(
+                    work_position__icontains=search_word) | Q(points__icontains=search_word)
+                )
+
         sort = request.GET.get('sort', '')
-        hot_teachers = Teacher.objects.all().order_by('-click_num')
+        hot_teachers = all_teacher.order_by('-click_num')
         if sort == 'hot':
             teachers = hot_teachers
         else:
-            teachers = Teacher.objects.all().order_by('-add_time')
+            teachers = all_teacher.order_by('-add_time')
 
         return render(request, 'teachers-list.html', {
             'teachers': teachers,

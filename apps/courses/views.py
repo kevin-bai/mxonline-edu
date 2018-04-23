@@ -1,6 +1,7 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
 from django.views.generic.base import View
+from django.db.models import Q
 from django.http import JsonResponse
 import json
 
@@ -14,6 +15,15 @@ from operation.models import UserFavorite, UserCourse, CourseComments
 class CourseListView(View):
     def get(self, request):
         all_courses = Course.objects.all().order_by('-add_time')
+
+        # 课程搜索
+        search_keywords = request.GET.get('search', '')
+        if search_keywords:
+            # xx__icontains 相当于数据库like语句，这里i一般都表示不区分大小写
+            all_courses = Course.objects.filter(
+                Q(name__icontains=search_keywords) | Q(detail__icontains=search_keywords) | Q(
+                    desc__icontains=search_keywords))
+
         # 排序
         sort = request.GET.get('sort', '')
         if sort:
