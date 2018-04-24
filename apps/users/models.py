@@ -29,7 +29,7 @@ class UserProfile(AbstractUser):
 class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u"验证码")
     email = models.EmailField(max_length=50, verbose_name=u"邮箱")
-    send_type = models.CharField(max_length=20, choices=(('register', u"注册"), ('forget', u"忘记密码")),
+    send_type = models.CharField(max_length=20, choices=(('register', u"注册"), ('forget', u"忘记密码"), ('update', u'修改邮箱')),
                                  verbose_name=u"验证类型")
     # default=datetime.now() 后面括号一定要去掉，不然取得是进入这行代码的时间，括号去掉才是这个class实例化的时间
     send_time = models.DateField(default=datetime.now, verbose_name=u"发送时间")

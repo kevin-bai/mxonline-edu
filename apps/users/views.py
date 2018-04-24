@@ -246,4 +246,26 @@ class UserModifyPwdView(View):
             user.save()
             return JsonResponse({'status': 'success'})
         else:
-            return HttpResponse(json.dumps(reset_form.errors))
+            return JsonResponse(reset_form.errors)
+
+
+class SendEmailCodeView(LoginRequiredMixin, View):
+    def get(self, request):
+        email = request.GET.get('email', '')
+        if UserProfile.objects.filter(email=email):
+            return JsonResponse({'status': 'fail', 'email': u'邮箱已存在'})
+        send_register_mail(email, 'update_email')
+        return JsonResponse({'status': 'success', 'msg': u'邮箱验证码已发送'})
+
+
+class UserUpdateEmailView(View):
+    def post(self, request):
+        email = request.POST.get('email', '')
+        code_input = request.POST.get('code', '')
+        verify_record = EmailVerifyRecord.objects.filter(code=code_input)
+        if verify_record:
+            request.user.email = email
+            request.user.save()
+            return JsonResponse({'status': 'success', 'msg': u'邮箱修改成功'})
+        else:
+            return JsonResponse({'status': 'fail', 'email': u'失败'})

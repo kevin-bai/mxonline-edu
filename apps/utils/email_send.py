@@ -35,6 +35,13 @@ def send_register_mail(email, send_type='register'):
         if send_status:
             pass
 
+    if send_type == 'update_email':
+        email_title = "慕学在线邮箱修改验证码邮件"
+        email_body = "邮箱验证码：{0}".format(code)
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+        if send_status:
+            pass
+
 
 def random_str(code_length=8):
     _str = ''

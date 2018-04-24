@@ -5,7 +5,8 @@ __date__ = '2018/4/23 14:16'
 
 from django.conf.urls import url, include
 
-from .views import UserInfoView, UserCourseView, UserFavoriteView, UserMessageView, UserImageUpload, UserModifyPwdView
+from .views import UserInfoView, UserCourseView, UserFavoriteView, UserMessageView, UserImageUpload, UserModifyPwdView, \
+    SendEmailCodeView,UserUpdateEmailView
 
 urlpatterns = [
     # 用户信息页面
@@ -20,4 +21,8 @@ urlpatterns = [
     url(r'^image/upload/$', UserImageUpload.as_view(), name='user_imageUpload'),
     # 用户个人中心修改密码
     url(r'^modify/pwd/$', UserModifyPwdView.as_view(), name='user_modifyPwd'),
+    # 发送邮箱验证码
+    url(r'^send_email_code/$', SendEmailCodeView.as_view(), name='user_send_email_code'),
+    # 用户更改邮箱
+    url(r'^update_email/$', UserUpdateEmailView.as_view(), name='user_update_email'),
 ]
