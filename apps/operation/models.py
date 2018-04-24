@@ -64,7 +64,7 @@ class UserMessage(models.Model):
     user = models.IntegerField(default=0, verbose_name=u'用户id')
     message = models.CharField(max_length=500, verbose_name=u'消息内容')
     has_read = models.BooleanField(default=False, verbose_name=u'是否已读')
-    send_time = models.DateField(default=datetime.now, verbose_name=u'发送时间')
+    send_time = models.DateTimeField(auto_now=True, verbose_name=u'发送时间')
     add_time = models.DateField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:

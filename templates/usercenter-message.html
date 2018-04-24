@@ -17,18 +17,16 @@
 
 			</div>
 			<div class="messagelist">
-
-                    <div class="messages">
-                        <div class="fr">
-                            <div class="top"><span class="fl time">2016年11月6日 23:49</span><span class="fr btn foldbtn"></span></div>
-                            <p>
-                                欢迎注册
-                            </p>
+                    {% for message in all_messages %}
+                        <div class="messages">
+                            <div class="fr">
+                                <div class="top"><span class="fl time">{{ message.send_time }}</span><span class="fr btn foldbtn"></span></div>
+                                <p>
+                                    {{ message.message }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-
-
-
+                    {% endfor %}
 			</div>
 
 

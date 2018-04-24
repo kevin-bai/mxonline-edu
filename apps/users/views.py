@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 import json
 
 from .models import UserProfile, EmailVerifyRecord
+from operation.models import UserCourse, UserMessage
 from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm, UserInfoForm
 from utils.email_send import send_register_mail
 from utils.mixin_utils import LoginRequiredMixin
@@ -190,7 +191,11 @@ class UserCourseView(LoginRequiredMixin, View):
     """
 
     def get(self, request):
-        return render(request, 'usercenter-mycourse.html')
+        user_courses = UserCourse.objects.filter(user=request.user)
+        all_courses = [user_course.course for user_course in user_courses]
+        return render(request, 'usercenter-mycourse.html', {
+            'all_courses': all_courses
+        })
 
 
 class UserMessageView(LoginRequiredMixin, View):
@@ -199,7 +204,11 @@ class UserMessageView(LoginRequiredMixin, View):
     """
 
     def get(self, request):
-        return render(request, 'usercenter-message.html')
+        user_messages = UserMessage.objects.filter(user=request.user.id).order_by('-send_time')
+        all_messages = [user_message for user_message in user_messages]
+        return render(request, 'usercenter-message.html', {
+            'all_messages': all_messages
+        })
 
 
 class UserFavoriteView(LoginRequiredMixin, View):
