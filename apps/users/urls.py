@@ -17,5 +17,5 @@ urlpatterns = [
     # 用户收藏页面
     url(r'^fav/$', UserFavoriteView.as_view(), name='user_fav'),
     # 用户头像上传
-    url(r'^/image/upload/$',UserImageUpload.as_view(), name='user_imageUpload')
+    url(r'^image/upload/$',UserImageUpload.as_view(), name='user_imageUpload')
 ]

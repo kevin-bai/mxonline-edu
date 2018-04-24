@@ -209,4 +209,7 @@ class UserImageUpload(LoginRequiredMixin, View):
         # 文件类型和别的form字段不一样，不放在POST里面，放在request.FILES
         image_form = UploadImageForm(request.POST, request.FILES)
         if image_form.is_valid():
-            pass
+            image = image_form.cleaned_data['avatar']
+            request.user.avatar = image
+            request.user.save()
+
