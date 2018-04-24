@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 import json
 
 from .models import UserProfile, EmailVerifyRecord
-from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm
+from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm, UserInfoForm
 from utils.email_send import send_register_mail
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -176,7 +176,12 @@ class UserInfoView(LoginRequiredMixin, View):
         return render(request, 'usercenter-info.html')
 
     def post(self, request):
-        pass
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse(user_info_form.errors)
 
 
 class UserCourseView(LoginRequiredMixin, View):
@@ -262,7 +267,7 @@ class UserUpdateEmailView(View):
     def post(self, request):
         email = request.POST.get('email', '')
         code_input = request.POST.get('code', '')
-        verify_record = EmailVerifyRecord.objects.filter(code=code_input)
+        verify_record = EmailVerifyRecord.objects.filter(email=email, code=code_input)
         if verify_record:
             request.user.email = email
             request.user.save()

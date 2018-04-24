@@ -41,16 +41,16 @@
                             <i class="error-tips"></i>
                         </li>
                         <li>生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：
-                            <input type="text" id="birth_day" name="birday" value="{{ request.user.birth_day| default_if_none:'' }}"
+                            <input type="text" id="birth_day" name="birth_day" value="{{ request.user.birth_day| default_if_none:''|date:"Y-m-d" }}"
                                    readonly="readonly"/>
                             <i class="error-tips"></i>
                         </li>
                         <li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
                             <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender"
-                                    {% if request.user.gender == 'mail' %} checked="checked"{% endif %}
+                                    {% if request.user.gender == 'male' %} checked="checked"{% endif %}
                                                                         value="male">男</label>
                             <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female"
-                                    {% if request.user.gender == 'femail' %} checked="checked"{% endif %}     >女</label>
+                                    {% if request.user.gender == 'female' %} checked="checked"{% endif %}     >女</label>
                         </li>
                         <li class="p_infor_city">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：
                             <input type="text" name="address" id="address" placeholder="请输入你的地址"
@@ -59,9 +59,9 @@
                             <i class="error-tips"></i>
                         </li>
                         <li>手&nbsp;&nbsp;机&nbsp;&nbsp;号：
-                            <input type="text" name="mobile" id="mobile" placeholder="请输入你的手机号码"
+                            <input type="text" name="phone" id="mobile" placeholder="请输入你的手机号码"
                                    value="{{ request.user.phone }}"
-                                   maxlength="10">
+                                   maxlength="11">
                         </li>
                         <li>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：
                             <input class="borderno" type="text" name="email" readonly="readonly"
