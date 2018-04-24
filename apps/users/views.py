@@ -4,12 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.hashers import make_password
 from django.core.urlresolvers import reverse
+import json
 
 from .models import UserProfile, EmailVerifyRecord
-from .form import LoginForm, RegisterForm, ForgetForm, ResetForm,UploadImageForm
+from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm
 from utils.email_send import send_register_mail
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -136,6 +137,10 @@ class ResetPasswordView(View):
 
 
 class ModifyPwdView(View):
+    """
+    邮箱找回，修改密码
+    """
+
     def post(self, request):
         reset_form = ResetForm(request.POST)
         if reset_form.is_valid():
@@ -205,11 +210,40 @@ class UserImageUpload(LoginRequiredMixin, View):
     """
     修改用户头像
     """
+
     def post(self, request):
         # 文件类型和别的form字段不一样，不放在POST里面，放在request.FILES
-        image_form = UploadImageForm(request.POST, request.FILES)
-        if image_form.is_valid():
-            image = image_form.cleaned_data['avatar']
-            request.user.avatar = image
-            request.user.save()
 
+        # image_form = UploadImageForm(request.POST, request.FILES)
+        # if image_form.is_valid():
+        #     image = image_form.cleaned_data['avatar']
+        #     request.user.avatar = image
+        #     request.user.save()
+
+        # 简写：
+        image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            request.user.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'fail'})
+
+
+class UserModifyPwdView(View):
+    """
+    个人中心修改密码
+    """
+
+    def post(self, request):
+        reset_form = ResetForm(request.POST)
+        if reset_form.is_valid():
+            pass_word1 = request.POST.get('password', '')
+            pass_word2 = request.POST.get('password2', '')
+            if pass_word1 != pass_word2:
+                return JsonResponse({'status': 'fail', 'msg': '密码不一致'})
+            user = request.user
+            user.password = make_password(pass_word1)
+            user.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return HttpResponse(json.dumps(reset_form.errors))
