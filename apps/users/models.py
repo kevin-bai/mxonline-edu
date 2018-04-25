@@ -17,6 +17,8 @@ class UserProfile(AbstractUser):
     avatar = models.ImageField(upload_to="image/%Y/%m", default=u"images/default.png", max_length=100,
                                verbose_name=u"头像")
 
+    # from operation.models import UserMessage
+
     class Meta:
         verbose_name = "用户信息"
         verbose_name_plural = verbose_name
@@ -59,3 +61,6 @@ class Banner(models.Model):
     class Meta:
         verbose_name = u"轮播图"
         verbose_name_plural = verbose_name
+
+    def __unicode__(self):
+        return self.title

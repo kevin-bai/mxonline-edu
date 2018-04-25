@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.urlresolvers import reverse
 import json
 
-from .models import UserProfile, EmailVerifyRecord
+from .models import UserProfile, EmailVerifyRecord, Banner
 from operation.models import UserCourse, UserMessage, UserFavorite
 from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm, UserInfoForm
 from organization.models import CourseOrg, Teacher
@@ -36,8 +36,15 @@ class CustomBackend(ModelBackend):
 
 class IndexView(View):
     def get(self, request):
+        banners = Banner.objects.all()
+        all_courses = Course.objects.all()[:6]
+        all_orgs = CourseOrg.objects.all()
+        all_courses_banner = Course.objects.all()[6:8]
         return render(request, 'index.html', {
-
+            'banners':banners,
+            'all_courses':all_courses,
+            'all_orgs':all_orgs,
+            'all_courses_banner':all_courses_banner
         })
 
 
@@ -57,7 +64,7 @@ class LoginView(View):
                 # 调用django的login方法
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'index.html', {'user_name': user_name, 'user': user})
+                    return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request, 'login.html', {'msg': u'用户名未激活'})
             else:
@@ -173,6 +180,7 @@ class LogoutView(View):
 
     def get(self, request):
         logout(request)
+        # reverse 可以根据 name直接反解成url地址
         return HttpResponseRedirect(reverse("index"))
 
 
