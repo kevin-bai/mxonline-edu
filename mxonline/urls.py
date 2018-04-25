@@ -24,7 +24,7 @@ from django.views.generic import TemplateView
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, \
     ResetPasswordView, ModifyPwdView, LogoutView, IndexView
 from organization.views import OrglistView
-from mxonline.settings import MEDIA_ROOT
+from mxonline.settings import MEDIA_ROOT,STATIC_ROOT
 
 urlpatterns = [
     url(r'^captcha/', include('captcha.urls')),
@@ -44,5 +44,12 @@ urlpatterns = [
     # 课程url配置
     url(r'^user/', include('users.urls', namespace='user')),
     # 处理media图片的路径
-    url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT})
+    url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT}),
+    # 处理static图片的路径
+    url(r'^static/(?P<path>.*)/$', serve, {'document_root': STATIC_ROOT})
 ]
+
+# 全局404页面配置
+handler404 = 'users.views.page_not_found'
+# 全局500页面配置
+handler500 = 'users.views.page_error'

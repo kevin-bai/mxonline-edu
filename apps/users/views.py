@@ -35,16 +35,19 @@ class CustomBackend(ModelBackend):
 
 
 class IndexView(View):
+    """
+    首页
+    """
     def get(self, request):
         banners = Banner.objects.all()
         all_courses = Course.objects.all()[:6]
         all_orgs = CourseOrg.objects.all()
         all_courses_banner = Course.objects.all()[6:8]
         return render(request, 'index.html', {
-            'banners':banners,
-            'all_courses':all_courses,
-            'all_orgs':all_orgs,
-            'all_courses_banner':all_courses_banner
+            'banners': banners,
+            'all_courses': all_courses,
+            'all_orgs': all_orgs,
+            'all_courses_banner': all_courses_banner
         })
 
 
@@ -74,7 +77,9 @@ class LoginView(View):
 
 
 class RegisterView(View):
-
+    """
+    注册页面
+    """
     def get(self, request):
         register_form = RegisterForm()
         return render(request, 'register.html', {'register_form': register_form})
@@ -106,6 +111,9 @@ class RegisterView(View):
 
 
 class ActiveUserView(View):
+    """
+    用户激活
+    """
     def get(self, request, active_code):
         print 'ActiveUserView'
         all_code = EmailVerifyRecord.objects.filter(code=active_code)
@@ -358,3 +366,19 @@ class UserUpdateEmailView(View):
             return JsonResponse({'status': 'success', 'msg': u'邮箱修改成功'})
         else:
             return JsonResponse({'status': 'fail', 'email': u'失败'})
+
+
+def page_not_found(request):
+    # 全局404处理函数
+    from django.shortcuts import render_to_response
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+def page_error(request):
+    # 全局500处理函数
+    from django.shortcuts import render_to_response
+    response = render_to_response('500.html', {})
+    response.status_code = 500
+    return response

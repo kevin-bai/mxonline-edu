@@ -30,3 +30,5 @@ urlpatterns = [
     # 用户更改邮箱
     url(r'^update_email/$', UserUpdateEmailView.as_view(), name='user_update_email'),
 ]
+
+
