@@ -12,7 +12,7 @@ import json
 from .models import UserProfile, EmailVerifyRecord
 from operation.models import UserCourse, UserMessage, UserFavorite
 from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm, UserInfoForm
-from organization.models import CourseOrg,Teacher
+from organization.models import CourseOrg, Teacher
 from courses.models import Course
 from utils.email_send import send_register_mail
 from utils.mixin_utils import LoginRequiredMixin
@@ -85,6 +85,12 @@ class RegisterView(View):
             user_profile.email = email
             user_profile.password = make_password(pass_word)
             user_profile.save()
+
+            # 写入欢迎注册消息
+            user_message = UserMessage()
+            user_message.user = user_profile.id
+            user_message.message = u'欢迎注册慕学在线'
+            user_message.save()
 
             send_register_mail(email, 'register')
             return render(request, 'send_sucess.html', {'msg': u'邮件已经发送，请查收'})
@@ -202,14 +208,17 @@ class UserCourseView(LoginRequiredMixin, View):
 
 class UserMessageView(LoginRequiredMixin, View):
     """
-    用户消息页面
+    个人消息页面
     """
 
     def get(self, request):
         user_messages = UserMessage.objects.filter(user=request.user.id).order_by('-send_time')
-        all_messages = [user_message for user_message in user_messages]
+        for user_message in user_messages:
+            user_message.has_read = True
+            user_message.save()
+        # all_messages = [user_message for user_message in user_messages]
         return render(request, 'usercenter-message.html', {
-            'all_messages': all_messages
+            'all_messages': user_messages
         })
 
 
@@ -314,6 +323,10 @@ class UserModifyPwdView(View):
 
 
 class SendEmailCodeView(LoginRequiredMixin, View):
+    """
+    发送邮箱验证码
+    """
+
     def get(self, request):
         email = request.GET.get('email', '')
         if UserProfile.objects.filter(email=email):
@@ -323,6 +336,10 @@ class SendEmailCodeView(LoginRequiredMixin, View):
 
 
 class UserUpdateEmailView(View):
+    """
+    用户更改密码
+    """
+
     def post(self, request):
         email = request.POST.get('email', '')
         code_input = request.POST.get('code', '')
