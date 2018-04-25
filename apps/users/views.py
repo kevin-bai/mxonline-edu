@@ -10,8 +10,10 @@ from django.core.urlresolvers import reverse
 import json
 
 from .models import UserProfile, EmailVerifyRecord
-from operation.models import UserCourse, UserMessage
+from operation.models import UserCourse, UserMessage, UserFavorite
 from .form import LoginForm, RegisterForm, ForgetForm, ResetForm, UploadImageForm, UserInfoForm
+from organization.models import CourseOrg,Teacher
+from courses.models import Course
 from utils.email_send import send_register_mail
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -211,13 +213,61 @@ class UserMessageView(LoginRequiredMixin, View):
         })
 
 
-class UserFavoriteView(LoginRequiredMixin, View):
+class UserFavoriteOrgView(LoginRequiredMixin, View):
     """
-    用户收藏页面
+    用户收藏机构页面
     """
 
     def get(self, request):
-        return render(request, 'usercenter-fav-org.html')
+        user_fav_orgs = UserFavorite.objects.filter(user=request.user, fav_type=2)
+        fav_orgs = []
+        for user_fav_org in user_fav_orgs:
+            fav_org = CourseOrg.objects.get(id=user_fav_org.fav_id)
+            fav_orgs.append(fav_org)
+
+        return render(request, 'usercenter-fav-org.html', {
+            'fav_orgs': fav_orgs
+        })
+
+
+class UserFavoriteTeacherView(LoginRequiredMixin, View):
+    """
+    用户收藏教师页面
+    """
+
+    def get(self, request):
+        fav_objs = getFavObjs(request, fav_type=3)
+
+        return render(request, 'usercenter-fav-teacher.html', {
+            'fav_teachers': fav_objs
+        })
+
+
+class UserFavoriteCourseView(LoginRequiredMixin, View):
+    """
+    用户收藏课程页面
+    """
+
+    def get(self, request):
+        fav_objs = getFavObjs(request, fav_type=1)
+
+        return render(request, 'usercenter-fav-course.html', {
+            'fav_courses': fav_objs
+        })
+
+
+def getFavObjs(request, fav_type=1):
+    user_favs = UserFavorite.objects.filter(user=request.user, fav_type=fav_type)
+    fav_objs = []
+    if fav_type == 1:
+        for user_fav in user_favs:
+            fav_obj = Course.objects.get(id=user_fav.fav_id)
+            fav_objs.append(fav_obj)
+    if fav_type == 3:
+        for user_fav in user_favs:
+            fav_obj = Teacher.objects.get(id=user_fav.fav_id)
+            fav_objs.append(fav_obj)
+    return fav_objs
 
 
 class UserImageUpload(LoginRequiredMixin, View):
