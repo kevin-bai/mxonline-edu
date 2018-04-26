@@ -9,11 +9,31 @@ import models as course
 from utils.obj2list import get_list_display, get_search_fields
 
 
+class LessonInline(object):
+    model = course.Lesson
+    extra = 0
+
+
+class CourseResourseInline(object):
+    model = course.CourseResource
+    extra = 0
+
+
 class CourseAdmin(object):
     obj = course.Course
-    list_display = get_list_display(obj)
+    list_display = ['name', 'id', 'course_org', 'teacher', 'desc', 'degree', 'click_num']
     search_fields = get_search_fields(obj)
     list_filter = get_list_display(obj)
+    # 显示排序
+    ordering = ['-click_num']
+    # 只读字段
+    readonly_fields = ['click_num']
+    # 去除字段显示
+    exclude = ['favourite_mun']
+    # icon
+    model_icon = 'fa fa-group'
+
+    inlines = [LessonInline, CourseResourseInline]
 
 
 class LessonAdmin(object):

@@ -1,3 +1,4 @@
+# _*_ encoding:utf-8 _*_
 import xadmin
 
 import models as org
@@ -16,6 +17,8 @@ class CourseOrgAdmin(object):
     list_display = get_list_display(obj)
     search_fields = get_search_fields(obj)
     list_filter = get_list_display(obj)
+    # 当有个外键指向他的时候，以搜索模式
+    relfield_style = 'fx-ajax'
 
 
 class TeacherAdmin(object):
