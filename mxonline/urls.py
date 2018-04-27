@@ -25,9 +25,12 @@ from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, 
     ResetPasswordView, ModifyPwdView, LogoutView, IndexView
 from organization.views import OrglistView
 from mxonline.settings import MEDIA_ROOT
+from DjangoUeditor.urls import get_ueditor_controller
 
 urlpatterns = [
     url(r'^captcha/', include('captcha.urls')),
+    # url(r'^ueditor/', include('DjangoUeditor.urls')),
+    url(r'^ueditor/', get_ueditor_controller),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),

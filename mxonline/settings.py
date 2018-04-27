@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
-    'pure_pagination'
+    'pure_pagination',
+    'DjangoUeditor',
 ]
 
 # 设置 自定义的user 覆盖django默认的user

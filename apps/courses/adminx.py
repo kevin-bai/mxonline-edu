@@ -33,7 +33,15 @@ class CourseAdmin(object):
     # icon
     model_icon = 'fa fa-group'
 
+    style_fields = {'detail': 'ueditor'}
+
+    import_excel = True
     inlines = [LessonInline, CourseResourseInline]
+
+    def post(self, request, *args, **kwargs):
+        if 'excel' in request.FILES:
+            pass
+        return super(CourseAdmin, self).post(request, args, kwargs)
 
 
 class LessonAdmin(object):

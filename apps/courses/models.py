@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 from django.db import models
+from DjangoUeditor.models import UEditorField
 
 from organization.models import CourseOrg, Teacher
 
@@ -14,7 +15,9 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, verbose_name=u'所属讲师', null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name=u"课程名称")
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
-    detail = models.TextField(verbose_name=u"课程详情")
+    detail = UEditorField(verbose_name=u"课程详情", width=600, height=300, imagePath="course/ueditor/",
+                          filePath="course/ueditor/",
+                          upload_settings={"imageMaxSize": 1204000}, blank=True, default='')
     degree = models.CharField(choices=(('LV1', '初级'), ('LV2', '中级'), ('lv3', '高级')),
                               max_length=3, verbose_name=u'难度')
     learn_times = models.IntegerField(default=0, verbose_name=u"课程时间(分钟)")
